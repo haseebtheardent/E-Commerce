@@ -2,9 +2,12 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from car.models import Contact
+from django.contrib import messages
 # Create your views here.
 
-@login_required(login_url='login')
+
+@login_required(login_url='/login/')
 def HomePage(request):
     return render(request, 'home.html')
 
@@ -42,3 +45,27 @@ def LoginPage(request):
 def LogoutPage(request):
     logout(request)
     return redirect('login')
+
+
+def ContactPage(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        contact = Contact(name=name, email=email, message=message)
+        contact.save()
+        messages.success(
+            request, "Thank You For Contacting Us, we will get back soon!")
+    return render(request, 'contact.html')
+
+
+def AboutPage(request):
+    return render(request, 'about.html')
+
+
+def ProductPage(request):
+    return render(request, 'products.html')
+
+
+def SingleProduct(request):
+    return render(request, 'single-product.html')

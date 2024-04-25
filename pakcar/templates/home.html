@@ -69,10 +69,10 @@
                                             <a href="javascript:;">Pages</a>
                                             
                                             <ul>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="products.html">Products</a></li>
-                                                <li><a href="single-product.html">Single Product</a></li>
-                                                <li><a href="contact.html">Contact Us</a></li>
+                                                <li><a href="{% url "about" %}">About Us</a></li>
+                                                <li><a href="{% url "product" %}">Products</a></li>
+                                                <li><a href="{% url "sproduct" %}">Single Product</a></li>
+                                                <li><a href="{% url "contact" %}">Contact Us</a></li>
                                                 
                                             </ul>
                                         </li>
@@ -85,7 +85,7 @@
                                                 <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
                                             </ul>
                                         </li>
-                                        <li class="scroll-to-section"><a href="#explore">Explore</a></li>
+                                        <li class="scroll-to-section"><a href="{% url "logout" %}">Logout</a></li>
                                         
                                     </ul>        
                                     <a class='menu-trigger'>
@@ -738,7 +738,6 @@
                                             <li>Work Hours:<br><span>07:30 AM - 9:30 PM Daily</span></li>
                                             <li>Email:<br><span>info@company.com</span></li>
                                             <li>Social Media:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Behance</a>, <a href="#">Linkedin</a></span></li>
-                <a href="{% url "logout" %}" class="btn btn-outline-success">Logout</a>
 
                                         </ul>
                                     </div>

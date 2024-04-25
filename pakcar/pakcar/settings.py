@@ -77,10 +77,15 @@ WSGI_APPLICATION = 'pakcar.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ecom',          # Replace with your database name
+        'USER': 'root',              # Replace with your database user
+        'PASSWORD': '',          # Replace with your database password
+        'HOST': 'localhost',         # Replace with your database host (e.g., 'localhost' or an IP address)
+        'PORT': '3306',              # Replace with your database port (MySQL default is 3306)
     }
 }
+
 
 
 # Password validation
