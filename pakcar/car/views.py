@@ -2,8 +2,10 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from car.models import Contact
+from car.models import Contact, Product, Category, Order
 from django.contrib import messages
+from .forms import OrderForm
+from django.utils import timezone
 # Create your views here.
 
 
@@ -35,6 +37,8 @@ def LoginPage(request):
         user = authenticate(request, username=username, password=pass1)
         if user is not None:
             login(request, user)
+            request.session['user_id'] = user.id
+            request.session['username'] = user.username
             return redirect('home')
         else:
             return HttpResponse("Username and pass incorrect!")
@@ -64,8 +68,40 @@ def AboutPage(request):
 
 
 def ProductPage(request):
-    return render(request, 'products.html')
+    products = None
+    categories = Category.get_all_categories()
+    categoryID = request.GET.get('category')
+    if categoryID:
+        products = Product.get_all_products_by_categoryid(categoryID)
+    else:
+        products = Product.get_all_products()
+    data = {}
+    data['products'] = products
+    data['categories'] = categories
+    return render(request, 'products.html', data)
 
 
-def SingleProduct(request):
-    return render(request, 'single-product.html')
+def __str__(self):
+    return self.name
+
+
+def submit_order(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            # Assuming you have a hidden input field in the form with the product ID
+            product_id = request.POST.get('product_id')
+            product = Product.objects.get(pk=product_id)
+            order = form.save(commit=False)
+            order.product = product
+            order.save()
+    else:
+        form = OrderForm()
+    return render(request, 'order_page.html', {'form': form})
+
+
+
+def order_page(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    return render(request, 'order_page.html', {'product': product})
+
